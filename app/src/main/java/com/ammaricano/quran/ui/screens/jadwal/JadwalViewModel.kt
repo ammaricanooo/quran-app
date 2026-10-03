@@ -3,7 +3,6 @@ package com.ammaricano.quran.ui.screens.jadwal
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.ammaricano.quran.data.model.CityOption
 import com.ammaricano.quran.data.model.ShalatData
 import com.ammaricano.quran.data.model.ShalatJadwalItem
 import com.ammaricano.quran.data.remote.RetrofitClient
