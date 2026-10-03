@@ -25,7 +25,7 @@ import androidx.compose.material.icons.rounded.FormatQuote
 import androidx.compose.material.icons.rounded.Gamepad
 import androidx.compose.material.icons.rounded.Layers
 import androidx.compose.material.icons.rounded.MenuBook
-import androidx.compose.material.icons.rounded.Scroll
+import androidx.compose.material.icons.rounded.Description
 import androidx.compose.material.icons.rounded.VolunteerActivism
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -104,7 +104,7 @@ fun LainnyaBottomSheet(
         ),
         ExtraMenuItem(
             title = "Tahlil & Yasin",
-            icon = Icons.Rounded.Scroll,
+            icon = Icons.Rounded.Description,
             route = "tahlil",
             iconColor = Color(0xFFC084FC),
             bgGradient = listOf(Color(0x33C084FC), Color(0x11C084FC))
