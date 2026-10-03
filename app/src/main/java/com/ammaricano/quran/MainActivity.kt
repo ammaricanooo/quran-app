@@ -1,8 +1,12 @@
 package com.ammaricano.quran
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -28,6 +33,9 @@ import com.ammaricano.quran.ui.components.AudioPlayerBottomBar
 import com.ammaricano.quran.ui.components.BottomNavBar
 import com.ammaricano.quran.ui.components.LainnyaBottomSheet
 import com.ammaricano.quran.ui.components.NavItem
+import com.ammaricano.quran.ui.components.SettingsBottomSheet
+import com.ammaricano.quran.ui.screens.artikel.ArtikelScreen
+import com.ammaricano.quran.ui.screens.artikel.ArtikelViewModel
 import com.ammaricano.quran.ui.screens.asmaulhusna.AsmaulHusnaScreen
 import com.ammaricano.quran.ui.screens.asmaulhusna.AsmaulHusnaViewModel
 import com.ammaricano.quran.ui.screens.bookmark.BookmarkScreen
@@ -48,8 +56,16 @@ import com.ammaricano.quran.ui.screens.juz.JuzScreen
 import com.ammaricano.quran.ui.screens.juz.JuzViewModel
 import com.ammaricano.quran.ui.screens.kuis.KuisScreen
 import com.ammaricano.quran.ui.screens.kuis.KuisViewModel
+import com.ammaricano.quran.ui.screens.kultum.KultumScreen
+import com.ammaricano.quran.ui.screens.kultum.KultumViewModel
+import com.ammaricano.quran.ui.screens.maulid.MaulidScreen
+import com.ammaricano.quran.ui.screens.maulid.MaulidViewModel
 import com.ammaricano.quran.ui.screens.murottal.MurottalScreen
 import com.ammaricano.quran.ui.screens.murottal.MurottalViewModel
+import com.ammaricano.quran.ui.screens.profil.ProfilScreen
+import com.ammaricano.quran.ui.screens.profil.ProfilViewModel
+import com.ammaricano.quran.ui.screens.robithoh.RobithohScreen
+import com.ammaricano.quran.ui.screens.robithoh.RobithohViewModel
 import com.ammaricano.quran.ui.screens.tahlil.TahlilScreen
 import com.ammaricano.quran.ui.screens.tahlil.TahlilViewModel
 import com.ammaricano.quran.ui.theme.BgPrimary
@@ -86,9 +102,11 @@ fun MainApp(audioPlayerManager: AudioPlayerManager) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: NavItem.Quran.route
+    val context = LocalContext.current
 
     val playbackState by audioPlayerManager.playbackState.collectAsState()
     var isLainnyaSheetOpen by remember { mutableStateOf(false) }
+    var isSettingsSheetOpen by remember { mutableStateOf(false) }
 
     val mainBottomBarRoutes = listOf(
         NavItem.Quran.route,
@@ -103,7 +121,11 @@ fun MainApp(audioPlayerManager: AudioPlayerManager) {
         NavHost(
             navController = navController,
             startDestination = NavItem.Quran.route,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            enterTransition = { fadeIn(animationSpec = tween(280)) + slideInHorizontally(animationSpec = tween(280)) { it / 6 } },
+            exitTransition = { fadeOut(animationSpec = tween(240)) },
+            popEnterTransition = { fadeIn(animationSpec = tween(280)) },
+            popExitTransition = { fadeOut(animationSpec = tween(240)) + slideOutHorizontally(animationSpec = tween(240)) { it / 6 } }
         ) {
             // 1. Home (Quran Surah List)
             composable(NavItem.Quran.route) {
@@ -156,11 +178,11 @@ fun MainApp(audioPlayerManager: AudioPlayerManager) {
                 )
             }
 
-            // 5. Bookmark
+            // 5. Profil (User Profile & Google Auth & Bookmarks)
             composable(NavItem.Profil.route) {
-                val bookmarkViewModel: BookmarkViewModel = viewModel()
-                BookmarkScreen(
-                    viewModel = bookmarkViewModel,
+                val profilViewModel: ProfilViewModel = viewModel()
+                ProfilScreen(
+                    viewModel = profilViewModel,
                     onSurahClick = { nomor ->
                         navController.navigate("surah_detail/$nomor")
                     }
@@ -223,6 +245,53 @@ fun MainApp(audioPlayerManager: AudioPlayerManager) {
                     onBack = { navController.popBackStack() }
                 )
             }
+
+            // 13. Doa Rabithah
+            composable("robithoh") {
+                val robithohViewModel: RobithohViewModel = viewModel()
+                RobithohScreen(
+                    viewModel = robithohViewModel,
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+
+            // 14. Materi Kultum
+            composable("kultum") {
+                val kultumViewModel: KultumViewModel = viewModel()
+                KultumScreen(
+                    viewModel = kultumViewModel,
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+
+            // 15. Artikel Islami
+            composable("artikel") {
+                val artikelViewModel: ArtikelViewModel = viewModel()
+                ArtikelScreen(
+                    viewModel = artikelViewModel,
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+
+            // 16. Kumpulan Maulid
+            composable("maulid") {
+                val maulidViewModel: MaulidViewModel = viewModel()
+                MaulidScreen(
+                    viewModel = maulidViewModel,
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+
+            // 17. Bookmark Screen (direct route)
+            composable("bookmark") {
+                val bookmarkViewModel: BookmarkViewModel = viewModel()
+                BookmarkScreen(
+                    viewModel = bookmarkViewModel,
+                    onSurahClick = { nomor ->
+                        navController.navigate("surah_detail/$nomor")
+                    }
+                )
+            }
         }
 
         // Bottom Navigation Bar & Floating Audio Bar
@@ -257,8 +326,26 @@ fun MainApp(audioPlayerManager: AudioPlayerManager) {
             LainnyaBottomSheet(
                 onDismiss = { isLainnyaSheetOpen = false },
                 onNavigate = { route ->
-                    navController.navigate(route)
+                    when (route) {
+                        "kiblat" -> {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://qiblafinder.withgoogle.com/"))
+                            context.startActivity(intent)
+                        }
+                        "settings" -> {
+                            isSettingsSheetOpen = true
+                        }
+                        else -> {
+                            navController.navigate(route)
+                        }
+                    }
                 }
+            )
+        }
+
+        // Settings Modal Bottom Sheet
+        if (isSettingsSheetOpen) {
+            SettingsBottomSheet(
+                onDismiss = { isSettingsSheetOpen = false }
             )
         }
     }

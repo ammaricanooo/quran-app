@@ -18,15 +18,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Favorite
-import androidx.compose.material.icons.rounded.FormatQuote
-import androidx.compose.material.icons.rounded.Gamepad
-import androidx.compose.material.icons.rounded.Layers
-import androidx.compose.material.icons.rounded.MenuBook
-import androidx.compose.material.icons.rounded.Description
-import androidx.compose.material.icons.rounded.VolunteerActivism
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,7 +37,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ammaricano.quran.ui.theme.BgPrimary
-import com.ammaricano.quran.ui.theme.BgPrimary2
 import com.ammaricano.quran.ui.theme.PrimaryBlue2
 import com.ammaricano.quran.ui.theme.TextMuted
 import com.ammaricano.quran.ui.theme.TextPrimary
@@ -75,6 +66,41 @@ fun LainnyaBottomSheet(
             bgGradient = listOf(Color(0x331089FF), Color(0x111089FF))
         ),
         ExtraMenuItem(
+            title = "Doa Rabithah",
+            icon = Icons.Rounded.FavoriteBorder,
+            route = "robithoh",
+            iconColor = Color(0xFFF43F5E),
+            bgGradient = listOf(Color(0x33F43F5E), Color(0x11F43F5E))
+        ),
+        ExtraMenuItem(
+            title = "Materi Kultum",
+            icon = Icons.Rounded.RecordVoiceOver,
+            route = "kultum",
+            iconColor = Color(0xFF06B6D4),
+            bgGradient = listOf(Color(0x3306B6D4), Color(0x1106B6D4))
+        ),
+        ExtraMenuItem(
+            title = "Artikel Islami",
+            icon = Icons.Rounded.Article,
+            route = "artikel",
+            iconColor = Color(0xFF10B981),
+            bgGradient = listOf(Color(0x3310B981), Color(0x1110B981))
+        ),
+        ExtraMenuItem(
+            title = "Kitab Maulid",
+            icon = Icons.Rounded.AutoStories,
+            route = "maulid",
+            iconColor = Color(0xFFA855F7),
+            bgGradient = listOf(Color(0x33A855F7), Color(0x11A855F7))
+        ),
+        ExtraMenuItem(
+            title = "Asmaul Husna",
+            icon = Icons.Rounded.AutoAwesome,
+            route = "asmaul_husna",
+            iconColor = Color(0xFFFBBF24),
+            bgGradient = listOf(Color(0x33FBBF24), Color(0x11FBBF24))
+        ),
+        ExtraMenuItem(
             title = "Dzikir",
             icon = Icons.Rounded.Favorite,
             route = "dzikir",
@@ -96,13 +122,6 @@ fun LainnyaBottomSheet(
             bgGradient = listOf(Color(0x33FB7185), Color(0x11FB7185))
         ),
         ExtraMenuItem(
-            title = "Asmaul Husna",
-            icon = Icons.Rounded.AutoAwesome,
-            route = "asmaul_husna",
-            iconColor = Color(0xFFFBBF24),
-            bgGradient = listOf(Color(0x33FBBF24), Color(0x11FBBF24))
-        ),
-        ExtraMenuItem(
             title = "Tahlil & Yasin",
             icon = Icons.Rounded.Description,
             route = "tahlil",
@@ -117,11 +136,18 @@ fun LainnyaBottomSheet(
             bgGradient = listOf(Color(0x3334D399), Color(0x1134D399))
         ),
         ExtraMenuItem(
-            title = "Tafsir Kemenag",
-            icon = Icons.Rounded.MenuBook,
-            route = "quran_home",
+            title = "Arah Kiblat",
+            icon = Icons.Rounded.Explore,
+            route = "kiblat",
             iconColor = Color(0xFF38BDF8),
             bgGradient = listOf(Color(0x3338BDF8), Color(0x1138BDF8))
+        ),
+        ExtraMenuItem(
+            title = "Pengaturan",
+            icon = Icons.Rounded.Settings,
+            route = "settings",
+            iconColor = Color(0xFF94A3B8),
+            bgGradient = listOf(Color(0x3394A3B8), Color(0x1194A3B8))
         )
     )
 
@@ -143,7 +169,7 @@ fun LainnyaBottomSheet(
             ) {
                 Column {
                     Text(
-                        text = "Menu & Fitur Lainnya",
+                        text = "Menu & Fitur Lengkap",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextPrimary

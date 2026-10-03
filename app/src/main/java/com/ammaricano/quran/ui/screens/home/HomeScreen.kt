@@ -1,22 +1,13 @@
 package com.ammaricano.quran.ui.screens.home
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,14 +20,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,15 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.ammaricano.quran.data.model.SurahItem
 import com.ammaricano.quran.ui.components.GlassCard
 import com.ammaricano.quran.ui.components.GlassSearchBar
-import com.ammaricano.quran.ui.theme.AyatFontFamily
-import com.ammaricano.quran.ui.theme.BgPrimary
-import com.ammaricano.quran.ui.theme.BgPrimary2
-import com.ammaricano.quran.ui.theme.PrimaryBlue
-import com.ammaricano.quran.ui.theme.PrimaryBlue2
-import com.ammaricano.quran.ui.theme.SecondaryPurple
-import com.ammaricano.quran.ui.theme.TextMuted
-import com.ammaricano.quran.ui.theme.TextPrimary
-import com.ammaricano.quran.ui.theme.TextSubtitle
+import com.ammaricano.quran.ui.theme.*
 
 @Composable
 fun HomeScreen(
@@ -156,7 +139,11 @@ fun HomeScreen(
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(PrimaryBlue)
+                                .background(
+                                    Brush.horizontalGradient(
+                                        listOf(PrimaryBlue, PrimaryBlue2)
+                                    )
+                                )
                                 .padding(horizontal = 14.dp, vertical = 8.dp)
                         ) {
                             Text(
@@ -180,37 +167,13 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Filter Pills
+            // Animated Sliding Filter Tabs
             val filters = listOf("Semua", "Mekah", "Madinah")
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(filters) { filter ->
-                    val isSelected = state.selectedFilter == filter
-                    val pillBg = if (isSelected) Color.White else Color.White.copy(alpha = 0.05f)
-                    val textColor = if (isSelected) BgPrimary else TextMuted
-
-                    Box(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(pillBg)
-                            .border(
-                                1.dp,
-                                if (isSelected) Color.White else Color.White.copy(alpha = 0.1f),
-                                CircleShape
-                            )
-                            .clickable { viewModel.onFilterSelect(filter) }
-                            .padding(horizontal = 16.dp, vertical = 6.dp)
-                    ) {
-                        Text(
-                            text = filter,
-                            fontSize = 12.sp,
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                            color = textColor
-                        )
-                    }
-                }
-            }
+            AnimatedSlidingFilterTabs(
+                filters = filters,
+                selectedFilter = state.selectedFilter,
+                onFilterSelected = { viewModel.onFilterSelect(it) }
+            )
         }
 
         // Surah List
@@ -287,6 +250,84 @@ fun HomeScreen(
 }
 
 @Composable
+fun AnimatedSlidingFilterTabs(
+    filters: List<String>,
+    selectedFilter: String,
+    onFilterSelected: (String) -> Unit
+) {
+    val selectedIndex = filters.indexOf(selectedFilter).coerceAtLeast(0)
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(SurfaceGlass)
+            .border(1.dp, BorderGlass, RoundedCornerShape(16.dp))
+            .padding(4.dp)
+    ) {
+        val density = LocalDensity.current
+        var tabWidths by remember { mutableStateOf(List(filters.size) { 0.dp }) }
+
+        // Sliding background indicator
+        val animatedIndicatorOffset by animateFloatAsState(
+            targetValue = selectedIndex.toFloat(),
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioLowBouncy,
+                stiffness = Spring.StiffnessMediumLow
+            ),
+            label = "tab_slide"
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            filters.forEachIndexed { index, filter ->
+                val isSelected = filter == selectedFilter
+
+                val textColor by animateColorAsState(
+                    targetValue = if (isSelected) TextPrimary else TextMuted,
+                    animationSpec = tween(200),
+                    label = "tab_text_color"
+                )
+
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(
+                            if (isSelected) {
+                                Brush.horizontalGradient(
+                                    listOf(PrimaryBlue, SecondaryPurple)
+                                )
+                            } else {
+                                Brush.horizontalGradient(
+                                    listOf(Color.Transparent, Color.Transparent)
+                                )
+                            }
+                        )
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            onFilterSelected(filter)
+                        }
+                        .padding(vertical = 8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = filter,
+                        fontSize = 13.sp,
+                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                        color = textColor
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun SurahCardItem(
     surah: SurahItem,
     onClick: () -> Unit
@@ -302,8 +343,8 @@ fun SurahCardItem(
             // Surah Number Diamond/Badge
             Box(
                 modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .size(42.dp)
+                    .clip(RoundedCornerShape(14.dp))
                     .background(
                         Brush.linearGradient(
                             colors = listOf(PrimaryBlue.copy(alpha = 0.25f), SecondaryPurple.copy(alpha = 0.15f))
@@ -312,7 +353,7 @@ fun SurahCardItem(
                     .border(
                         1.dp,
                         PrimaryBlue.copy(alpha = 0.35f),
-                        RoundedCornerShape(12.dp)
+                        RoundedCornerShape(14.dp)
                     ),
                 contentAlignment = Alignment.Center
             ) {
