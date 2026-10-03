@@ -213,7 +213,7 @@ private fun LoginPrompt(onLogin: () -> Unit) {
                 .clip(RoundedCornerShape(24.dp))
                 .background(
                     Brush.linearGradient(
-                        colors = listOf(PrimaryBlue.copy(alpha = 0.2f), SecondaryPurple.copy(alpha = 0.15f))
+                        colors = listOf(PrimaryBlue.copy(alpha = 0.2f), PrimaryBlue2.copy(alpha = 0.08f))
                     )
                 )
                 .border(1.dp, PrimaryBlue.copy(alpha = 0.3f), RoundedCornerShape(24.dp)),
@@ -285,7 +285,7 @@ private fun ProfileCard(
                 Brush.linearGradient(
                     colors = listOf(
                         PrimaryBlue.copy(alpha = 0.15f),
-                        SecondaryPurple.copy(alpha = 0.1f)
+                        PrimaryBlue2.copy(alpha = 0.05f)
                     )
                 )
             )
@@ -455,7 +455,7 @@ private fun LastReadCard(
             .clip(RoundedCornerShape(22.dp))
             .background(
                 Brush.horizontalGradient(
-                    colors = listOf(PrimaryBlue.copy(alpha = 0.15f), SecondaryPurple.copy(alpha = 0.1f))
+                    colors = listOf(PrimaryBlue.copy(alpha = 0.15f), PrimaryBlue2.copy(alpha = 0.05f))
                 )
             )
             .border(1.dp, PrimaryBlue.copy(alpha = 0.2f), RoundedCornerShape(22.dp))

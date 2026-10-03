@@ -37,7 +37,6 @@ import com.ammaricano.quran.ui.theme.AyatFontFamily
 import com.ammaricano.quran.ui.theme.BgPrimary
 import com.ammaricano.quran.ui.theme.BgPrimary2
 import com.ammaricano.quran.ui.theme.PrimaryBlue2
-import com.ammaricano.quran.ui.theme.SecondaryPurple
 import com.ammaricano.quran.ui.theme.TextMuted
 import com.ammaricano.quran.ui.theme.TextPrimary
 import com.ammaricano.quran.ui.theme.TextSubtitle
@@ -107,10 +106,10 @@ fun TahlilCardItem(index: Int, item: TahlilItem) {
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
-                        .background(SecondaryPurple.copy(alpha = 0.25f))
+                        .background(PrimaryBlue.copy(alpha = 0.20f))
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
-                    Text(text = repeat, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text(text = repeat, fontSize = 11.sp, fontWeight = FontWeight.Bold, color = PrimaryBlue2)
                 }
             }
         }

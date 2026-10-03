@@ -62,7 +62,6 @@ import com.ammaricano.quran.ui.theme.BgPrimary
 import com.ammaricano.quran.ui.theme.BgPrimary2
 import com.ammaricano.quran.ui.theme.PrimaryBlue
 import com.ammaricano.quran.ui.theme.PrimaryBlue2
-import com.ammaricano.quran.ui.theme.SecondaryPurple
 import com.ammaricano.quran.ui.theme.TextMuted
 import com.ammaricano.quran.ui.theme.TextPrimary
 import com.ammaricano.quran.ui.theme.TextSubtitle
@@ -375,9 +374,8 @@ fun SurahHeroBanner(
             .background(
                 Brush.linearGradient(
                     colors = listOf(
-                        PrimaryBlue.copy(alpha = 0.35f),
-                        SecondaryPurple.copy(alpha = 0.30f),
-                        BgPrimary2
+                        PrimaryBlue,
+                        PrimaryBlue2
                     )
                 )
             )

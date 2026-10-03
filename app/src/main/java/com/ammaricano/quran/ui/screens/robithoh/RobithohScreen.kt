@@ -98,8 +98,8 @@ fun RobithohScreen(
                             .background(
                                 Brush.linearGradient(
                                     listOf(
-                                        PrimaryBlue.copy(alpha = 0.25f),
-                                        SecondaryPurple.copy(alpha = 0.25f)
+                                        PrimaryBlue.copy(alpha = 0.20f),
+                                        PrimaryBlue2.copy(alpha = 0.08f)
                                     )
                                 )
                             )

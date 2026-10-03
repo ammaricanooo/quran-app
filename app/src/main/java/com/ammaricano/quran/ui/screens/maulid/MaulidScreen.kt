@@ -266,7 +266,7 @@ fun MaulidScreen(
                                             .clip(RoundedCornerShape(12.dp))
                                             .background(
                                                 Brush.linearGradient(
-                                                    listOf(PrimaryBlue.copy(alpha = 0.2f), SecondaryPurple.copy(alpha = 0.2f))
+                                                    listOf(PrimaryBlue.copy(alpha = 0.2f), PrimaryBlue2.copy(alpha = 0.08f))
                                                 )
                                             ),
                                         contentAlignment = Alignment.Center
@@ -323,8 +323,8 @@ fun MaulidScreen(
                                     .background(
                                         Brush.linearGradient(
                                             listOf(
-                                                PrimaryBlue.copy(alpha = 0.25f),
-                                                SecondaryPurple.copy(alpha = 0.25f)
+                                                PrimaryBlue.copy(alpha = 0.20f),
+                                                PrimaryBlue2.copy(alpha = 0.08f)
                                             )
                                         )
                                     )
@@ -388,7 +388,7 @@ fun MaulidScreen(
                                             .clip(RoundedCornerShape(16.dp))
                                             .background(
                                                 Brush.linearGradient(
-                                                    listOf(PrimaryBlue.copy(alpha = 0.3f), SecondaryPurple.copy(alpha = 0.3f))
+                                                    listOf(PrimaryBlue.copy(alpha = 0.25f), PrimaryBlue2.copy(alpha = 0.10f))
                                                 )
                                             ),
                                         contentAlignment = Alignment.Center

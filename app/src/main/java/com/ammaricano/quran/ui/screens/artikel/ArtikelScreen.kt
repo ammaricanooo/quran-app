@@ -260,15 +260,12 @@ fun ArtikelScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
                             .background(
-                                if (isSelected) {
-                                    Brush.horizontalGradient(listOf(PrimaryBlue, SecondaryPurple))
-                                } else {
-                                    Brush.horizontalGradient(listOf(SurfaceGlass, SurfaceGlass))
-                                }
+                                if (isSelected) Color.White
+                                else Color.White.copy(alpha = 0.05f)
                             )
                             .border(
                                 1.dp,
-                                if (isSelected) PrimaryBlue2 else BorderGlass,
+                                if (isSelected) Color.White else Color.White.copy(alpha = 0.08f),
                                 RoundedCornerShape(20.dp)
                             )
                             .clickable { viewModel.selectCategory(catId) }
@@ -276,9 +273,9 @@ fun ArtikelScreen(
                     ) {
                         Text(
                             text = catName,
-                            fontSize = 13.sp,
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                            color = if (isSelected) TextPrimary else TextMuted
+                            fontSize = 12.sp,
+                            fontWeight = if (isSelected) FontWeight.Black else FontWeight.Medium,
+                            color = if (isSelected) BgPrimary else Color.White.copy(alpha = 0.65f)
                         )
                     }
                 }

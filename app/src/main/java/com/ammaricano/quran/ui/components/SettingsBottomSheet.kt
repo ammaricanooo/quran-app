@@ -208,8 +208,8 @@ fun SettingsBottomSheet(
                 valueRange = 1f..5f,
                 steps = 3,
                 colors = SliderDefaults.colors(
-                    thumbColor = SecondaryPurple2,
-                    activeTrackColor = SecondaryPurple,
+                    thumbColor = PrimaryBlue2,
+                    activeTrackColor = PrimaryBlue,
                     inactiveTrackColor = SurfaceGlass
                 )
             )

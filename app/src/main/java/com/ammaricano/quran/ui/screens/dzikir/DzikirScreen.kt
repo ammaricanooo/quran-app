@@ -45,7 +45,6 @@ import com.ammaricano.quran.ui.theme.BgPrimary2
 import com.ammaricano.quran.ui.theme.EmeraldGreen
 import com.ammaricano.quran.ui.theme.PrimaryBlue
 import com.ammaricano.quran.ui.theme.PrimaryBlue2
-import com.ammaricano.quran.ui.theme.SecondaryPurple
 import com.ammaricano.quran.ui.theme.TextMuted
 import com.ammaricano.quran.ui.theme.TextPrimary
 import com.ammaricano.quran.ui.theme.TextSubtitle
@@ -99,7 +98,7 @@ fun DzikirScreen(viewModel: DzikirViewModel) {
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(if (isPagi) PrimaryBlue else Color.Transparent)
+                        .background(if (isPagi) Color.White else Color.Transparent)
                         .clickable { viewModel.selectTab("pagi") }
                         .padding(vertical = 10.dp),
                     contentAlignment = Alignment.Center
@@ -108,15 +107,15 @@ fun DzikirScreen(viewModel: DzikirViewModel) {
                         Icon(
                             imageVector = Icons.Rounded.WbSunny,
                             contentDescription = null,
-                            tint = if (isPagi) Color.White else TextMuted,
+                            tint = if (isPagi) BgPrimary else TextMuted,
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = "Dzikir Pagi",
                             fontSize = 13.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = if (isPagi) Color.White else TextMuted
+                            fontWeight = if (isPagi) FontWeight.Black else FontWeight.Medium,
+                            color = if (isPagi) BgPrimary else TextMuted
                         )
                     }
                 }
@@ -126,7 +125,7 @@ fun DzikirScreen(viewModel: DzikirViewModel) {
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(if (!isPagi) SecondaryPurple else Color.Transparent)
+                        .background(if (!isPagi) Color.White else Color.Transparent)
                         .clickable { viewModel.selectTab("petang") }
                         .padding(vertical = 10.dp),
                     contentAlignment = Alignment.Center
@@ -135,15 +134,15 @@ fun DzikirScreen(viewModel: DzikirViewModel) {
                         Icon(
                             imageVector = Icons.Rounded.NightsStay,
                             contentDescription = null,
-                            tint = if (!isPagi) Color.White else TextMuted,
+                            tint = if (!isPagi) BgPrimary else TextMuted,
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = "Dzikir Petang",
                             fontSize = 13.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = if (!isPagi) Color.White else TextMuted
+                            fontWeight = if (!isPagi) FontWeight.Black else FontWeight.Medium,
+                            color = if (!isPagi) BgPrimary else TextMuted
                         )
                     }
                 }

@@ -38,8 +38,6 @@ import com.ammaricano.quran.ui.theme.BgPrimary
 import com.ammaricano.quran.ui.theme.BgPrimary2
 import com.ammaricano.quran.ui.theme.PrimaryBlue
 import com.ammaricano.quran.ui.theme.PrimaryBlue2
-import com.ammaricano.quran.ui.theme.SecondaryPurple
-import com.ammaricano.quran.ui.theme.SecondaryPurple2
 import com.ammaricano.quran.ui.theme.TextMuted
 import com.ammaricano.quran.ui.theme.TextPrimary
 import com.ammaricano.quran.ui.theme.TextSubtitle
@@ -110,23 +108,9 @@ fun AsmaulHusnaCard(
     item: AsmaulHusnaItem,
     index: Int
 ) {
-    // Replicating web CSS checkerboard (4n, 4n+1 = blue; 4n+2, 4n+3 = purple)
-    val mod = index % 4
-    val isBlueTheme = (mod == 0 || mod == 3)
-
-    val gradientColors = if (isBlueTheme) {
-        listOf(PrimaryBlue.copy(alpha = 0.20f), PrimaryBlue.copy(alpha = 0.05f))
-    } else {
-        listOf(SecondaryPurple.copy(alpha = 0.20f), SecondaryPurple.copy(alpha = 0.05f))
-    }
-
-    val borderColor = if (isBlueTheme) {
-        PrimaryBlue.copy(alpha = 0.25f)
-    } else {
-        SecondaryPurple.copy(alpha = 0.25f)
-    }
-
-    val accentColor = if (isBlueTheme) PrimaryBlue2 else SecondaryPurple2
+    val gradientColors = listOf(Color.White.copy(alpha = 0.06f), Color.White.copy(alpha = 0.02f))
+    val borderColor = Color.White.copy(alpha = 0.10f)
+    val accentColor = PrimaryBlue2
 
     val shape = RoundedCornerShape(20.dp)
 
