@@ -36,6 +36,7 @@ import com.ammaricano.quran.ui.components.GlassCard
 import com.ammaricano.quran.ui.theme.AyatFontFamily
 import com.ammaricano.quran.ui.theme.BgPrimary
 import com.ammaricano.quran.ui.theme.BgPrimary2
+import com.ammaricano.quran.ui.theme.PrimaryBlue
 import com.ammaricano.quran.ui.theme.PrimaryBlue2
 import com.ammaricano.quran.ui.theme.TextMuted
 import com.ammaricano.quran.ui.theme.TextPrimary
